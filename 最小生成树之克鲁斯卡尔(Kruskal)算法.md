@@ -1,6 +1,8 @@
 
 
 最小生成树能够保证整个拓扑图的**所有路径之和最小**，但不能保证任意两点之间是最短路径。
+Kruskal 算法使用了贪心的思想：将所有的边按照权重从小到大进行排序，然后从权重最小的边开始遍历，如果这条边和结果集中的边（已经加入到最小生成树中的边）不会形成环，那么这条边就是最小生成树的一部分，将它加入到结果集中；否则，这条边就不是最小生成树的一部分，就不要把它加入到结果集中
+
 ![示例图](https://img-blog.csdnimg.cn/20201124153227934.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NjQ5NzUwMw==,size_16,color_FFFFFF,t_70#pic_center)
 克鲁斯卡尔(Kruskal)算法(加边法)：
 基本思想：按照权值从大到小的顺序选择 n - 1 条边，并保证这 n - 1 条边不构成回路
