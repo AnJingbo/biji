@@ -27,7 +27,7 @@
 过程：A->B: (A, B) 10;    A->C: (A, D, C) 50;    A->D: (A, D) 30;    A->E: (A, D, C, E) 60
 
 ```java
-public class Dijskra {
+public class Dijkstra {
     // N可以全部初始化为最大值，但一定要判断是否为最大值以避免运算时溢出
     static final int N = 10000;//表示不可连接
     public static void main(String[] args) {
@@ -40,15 +40,15 @@ public class Dijskra {
         };
         //求从 0 到各顶点的最短距离
         dijkstra(weight, 0);
-
     }
-
+    
+    // 给定一幅图和一个起点(源点) source，计算 source 到其它结点的最短路径的长度 
     public static void dijkstra(int[][] weight, int source){
-        // 记录最短路径的长度
+        // 记录最短路径的长度。shortest[i] 表示源点 source 到结点 i 的最短路径的长度
         int[] shortest = new int[weight.length];
-        // 判断该点是否已经加入集合中，该集合中的元素已经计算出最短路径。一开始该集合中只有源点
-        boolean[] isVisted = new boolean[weight.length];
-        // 记录从源点到结点i的输出路径
+        // 记录最短路径是否已经被求出。isVisited[i] 表示源点 source 到结点 i 的最短路径的长度是否已经被求出
+        boolean[] isVisited = new boolean[weight.length];
+        // 记录从源点到结点 i 的输出路径
         String[] path = new String[weight.length];
 
         // 初始化输出路径
@@ -57,7 +57,7 @@ public class Dijskra {
         }
         // 初始化源节点
         shortest[source] = 0;
-        isVisted[source] = true;
+        isVisited[source] = true;
 
         for(int i = 1; i < weight.length; i++){
             int min = Integer.MAX_VALUE;
@@ -66,18 +66,18 @@ public class Dijskra {
             // 找到和源点相连的权值较小的点
             for(int j = 0; j < weight.length; j++){
                 // 已经求出最短路径的结点不需要再加入计算 并且 判断从源点到其他节点是否存在更短路径(j一直在变化，就是在遍历其他节点)
-                if(isVisted[j] == false && weight[source][j] < min){
+                if(isVisited[j] == false && weight[source][j] < min){
                     min = weight[source][j];
                     index = j;
                 }
             }
             // 更新最短路径
             shortest[index] = min;
-            isVisted[index] = true;
+            isVisited[index] = true;
 
             // 更新源点借助 index 这个点到其他节点的较短路径
             for(int j = 0; j < weight.length; j++){
-                if(isVisted[j] == false && weight[source][index] + weight[index][j] < weight[source][j]){
+                if(isVisited[j] == false && weight[source][index] + weight[index][j] < weight[source][j]){
                     weight[source][j] = weight[source][index] + weight[index][j];
                     path[j] = path[index] + "->" + j;
                 }
